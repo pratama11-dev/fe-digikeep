@@ -165,7 +165,7 @@ function DashboardLayout({
           </div>
 
           <Footer style={{ textAlign: "center" }}>
-            FORMULA ©
+            DIGIKEEP ©
             {' '}
             {moment().year()}
           </Footer>

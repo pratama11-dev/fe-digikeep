@@ -14,7 +14,7 @@ export default function LoginPage(session: Sessions) {
         overflowY: "hidden",
       }}
     >
-      <HeadPage title="Formula Login Page" />
+      <HeadPage title="Digikeep Login Page" />
       <ThemeBackground />
       <LoginForm session={session} style={{ width: "100%" }} />
     </div>
