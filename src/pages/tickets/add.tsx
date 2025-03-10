@@ -9,7 +9,7 @@ import { useState } from "react";
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import useAuth from "@api/customHooks/useAuth";
 import SelectEvent from "@components/Global/SelectEvent";
-import { IEvent } from "types/event/index";
+import { IEvent } from "types/document/index";
 import readFileAsDataURL from "@components/Util/readFileAsDataUrl";
 import useFetcher from "@api/customHooks/useFetcher";
 import { showSuccess } from "@utils/helpers/AntdHelper";

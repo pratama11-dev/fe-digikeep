@@ -5,6 +5,8 @@ import { SlNotebook } from "react-icons/sl";
 import { FaTicketAlt } from "react-icons/fa";
 
 // eslint-disable-next-line import/prefer-default-export
+
+
 export const AdminRoutes: routesType = [
   {
     path: "/",
@@ -14,24 +16,24 @@ export const AdminRoutes: routesType = [
     children: [],
   },
   {
-    path: "/event",
-    key: "event",
-    name: "Event",
+    path: "/document",
+    key: "document",
+    name: "Document",
     icon: <SlNotebook />,
     children: [],
   },
   {
-    path: "/tickets",
-    key: "tickets",
-    name: "Tickets",
-    icon: <FaTicketAlt />,
+    path: "/categories-document",
+    key: "categories-document",
+    name: "Categories Document",
+    icon: <SlNotebook />,
     children: [],
   },
   {
-    path: "/orders",
-    key: "orders",
-    name: "Orders",
-    icon: <OrderedListOutlined rev={''} />,
+    path: "/users",
+    key: "users",
+    name: "Users",
+    icon: <SlNotebook />,
     children: [],
-  }
+  },
 ];

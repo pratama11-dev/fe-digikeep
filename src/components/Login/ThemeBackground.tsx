@@ -2,6 +2,7 @@ import useWindowSize from "@utils/helpers/ReactHelper";
 import { useMemo } from "react";
 import { Image } from "antd";
 import themeColor from "@configs/theme/themeColor";
+import { MdEditDocument } from "react-icons/md";
 
 function ThemeBackground() {
   const windowDimension = useWindowSize();
@@ -27,7 +28,7 @@ function ThemeBackground() {
           width: "50%",
         }}
       >
-        <span
+        {/* <span
           style={{
             display: "block",
             backgroundColor: themeColor.signatureColor,
@@ -39,7 +40,7 @@ function ThemeBackground() {
             right: "20vh",
             zIndex: -9999,
           }}
-        />
+        /> */}
         <span
           style={{
             position: "absolute",
@@ -56,23 +57,23 @@ function ThemeBackground() {
         >
           {/* <h1></h1> */}
           <Image
-            src="/Images/logo_gs.png"
+            src="/Images/logo.png"
             style={{
               zIndex: 1,
-              width: isTablet ? "180px" : "280px",
+              width: isTablet ? "180px" : "700px",
             }}
             alt="logo login"
             preview={false}
           />
           <h1
             style={{
-              color: "white",
+              padding: 0,
               letterSpacing: isTablet ? "2px" : "3.5px",
               whiteSpace: "nowrap",
               fontSize: isTablet ? "19px" : "30px",
             }}
           >
-            GS x FORMULA
+            DIGIKEEP
           </h1>
         </span>
       </div>
@@ -83,14 +84,6 @@ function ThemeBackground() {
           zIndex: -999,
         }}
       >
-        <Image
-          src="Images/bg_support.svg"
-          height="180px"
-          width={isTablet ? "220%" : "150%"}
-          alt=""
-          style={{ position: "relative" }}
-          preview={false}
-        />
       </span>
     </div>
   );

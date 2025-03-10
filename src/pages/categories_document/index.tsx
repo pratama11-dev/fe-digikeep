@@ -8,15 +8,20 @@ import { Button, Col, Input, Row, TablePaginationConfig } from "antd";
 import { FilterValue } from "antd/es/table/interface";
 import useDebounce from "@utils/helpers/customHooks/useDebounce";
 import useWindowSize from "@utils/helpers/ReactHelper";
-import { useEventQuery } from "@services/reactQuery/event";
-import EventTable from "@components/Event/TableEvent";
-import ModalEvent from "@components/Event/ModalEvent";
+
+
+import OrderTable from "@components/Order/OrderTicket";
 import { PlusOutlined } from "@ant-design/icons";
+import useFetcher from "@api/customHooks/useFetcher";
+import { showSuccess } from "@utils/helpers/AntdHelper";
+import { useDocumentCategoriesQuery } from "@services/reactQuery/document";
 
 
-const EventPage = (session: Sessions) => {
-    useNavbar(["event"], [{ name: "Event", url: "/event" }]);
+const CategoriesPage = (session: Sessions) => {
+    useNavbar(["orders"], [{ name: "Orders", url: "/orders" }]);
     const { isMobile } = useWindowSize();
+    const { FetcherPost, isLoading } = useFetcher(session);
+
 
     const [paginationTable1, setPaginationTable1] = useState<TablePaginationConfig>({
         current: 1,
@@ -26,10 +31,9 @@ const EventPage = (session: Sessions) => {
 
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>();
-    const [modal, setModal] = useState(false)
     const debouncedSearch = useDebounce(search, 500);
 
-    const dataListEvent = useEventQuery({
+    const dataListCategories = useDocumentCategoriesQuery({
         session: session,
         pagination: paginationTable1,
         search: debouncedSearch,
@@ -37,13 +41,25 @@ const EventPage = (session: Sessions) => {
         filters
     })
 
-    const dataList = dataListEvent?.data?.data?.data
+    const dataList = dataListCategories?.data?.data?.data
+
+    const doSendEmail = async () => {
+        FetcherPost({
+            api: "API",
+            url: `/api/email/send`,
+            data: {
+            }
+        }).then((d) => {
+            if (d.status === 200) {
+                showSuccess("Success", `Berhasil menghapus Ticket`)
+            }
+        })
+    }
 
     return (
         <>
-            <HeadPage withDefaultCss title="Event" />
+            <HeadPage withDefaultCss title="Orders" />
             <DashboardLayout session={session}>
-
                 <Row justify="space-between" align="middle" gutter={[10, 20]}>
                     <Col xs={20} sm={20} md={20} lg={20}>
                         <Input.Search
@@ -51,39 +67,31 @@ const EventPage = (session: Sessions) => {
                             placeholder="Search by name event"
                         />
                     </Col>
-                    <Col xs={4} sm={4} md={4} lg={4}>
+                    <Col>
                         <Button
-                            // loading={isLoading}
-                            onClick={() => { setModal(true) }}
+                            onClick={() => { doSendEmail() }}
                             block={isMobile}
                             type="primary"
                             style={{ width: "100%" }}
                             icon={<PlusOutlined rev={""} />}
                         >
-                            {isMobile ? "" : "Add Event"}
+                            {isMobile ? "" : "Send Ticket"}
                         </Button>
                     </Col>
                 </Row>
 
                 <div style={{ height: "10px" }} />
 
-                <EventTable
+                {/* <OrderTable
                     session={session}
                     data={dataList ?? []}
-                    loading={dataListEvent.isLoading}
+                    loading={dataListCategories.isLoading}
                     onChange={(pg, ft) => {
                         setPaginationTable1(pg);
                         setFilters(ft);
                     }}
-                    pagination={{ ...paginationTable1, total: dataListEvent?.data?.data?.total }}
-                />
-
-                <ModalEvent 
-                    session={session}
-                    visible={modal}
-                    setVisible={setModal}
-                />
-
+                    pagination={{ ...paginationTable1, total: dataListCategories?.data?.data?.total }}
+                /> */}
             </DashboardLayout>
         </>
     )
@@ -94,4 +102,4 @@ export async function getServerSideProps(context: any) {
     return checkSessions;
 }
 
-export default EventPage;
+export default CategoriesPage;

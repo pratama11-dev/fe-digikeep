@@ -96,7 +96,7 @@ const useAuth = (session?: Sessions) => {
     setError("");
     setLoading((prev) => ({ ...prev, logout: true }));
     try {
-      const logout = await FetcherGet({ url: "/api/logout", api: "CUSTOM" });
+      const logout = await FetcherGet({ url: "/public/v1/logout", api: "CUSTOM" });
       if (logout?.data?.code === 0) {
         window.localStorage.clear();
         ReplaceNavigateTo("/login?code=1");

@@ -1,42 +1,42 @@
 import handleSessions from "@pages/api/GetSession";
 import { Button, Popconfirm, Switch, Table, TableProps, Tag } from "antd";
 import { Sessions } from "types/Session";
-import { IEvent } from "types/event/index";
+import { IDocument } from "types/document/index";
 import customFooterPagination from "@components/Partial/customFooterPagination";
 import moment from "moment";
 import getUserRole from "@utils/helpers/getUserRoles";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import ModalEvent from "./ModalEvent";
+import ModalDocument from "./ModalDocument";
 import { useState } from "react";
 import useFetcher from "@api/customHooks/useFetcher";
 import { showSuccess } from "@utils/helpers/AntdHelper";
 import { useQueryClient } from "@tanstack/react-query";
 
-interface ITableEvent {
+interface ITableDocument {
     session: Sessions | undefined;
-    data?: IEvent[];
+    data?: IDocument[];
     pagination: { current?: number | undefined; pageSize?: number | undefined; total?: number | undefined };
     loading?: boolean;
-    onChange?: TableProps<IEvent>["onChange"];
+    onChange?: TableProps<IDocument>["onChange"];
 }
 
-const EventTable = ({
+const DocumentTable = ({
     session,
     data,
     pagination,
     loading,
     onChange,
-}: ITableEvent) => {
+}: ITableDocument) => {
     const role = getUserRole(session)
     const { FetcherPost, isLoading } = useFetcher(session);
     const uq = useQueryClient();
 
     const [modal, setModal] = useState(false)
-    const [selectedData, setSelectedData] = useState<IEvent>()
+    const [selectedData, setSelectedData] = useState<IDocument>()
 
     const onDelete = async (id: number) => {
         const data = await FetcherPost({
-            url: "/api/event/delete",
+            url: "/api/document/delete",
             api: "API",
             data: {
                 id
@@ -44,7 +44,7 @@ const EventTable = ({
         })
         if (data.status === 200) {
             showSuccess("Berhasil!", `berhasil menghapus data`)
-            uq.invalidateQueries(['useEventQuery'])
+            uq.invalidateQueries(['useDocumentQuery'])
         }
     }
 
@@ -80,30 +80,30 @@ const EventTable = ({
                     }}
                 />
                 <Table.Column
-                    title="Event Name"
+                    title="Title"
                     dataIndex="name"
-                    render={(_value, item: IEvent) => item?.name ?? "-"}
+                    render={(_value, item: IDocument) => item?.title ?? "-"}
                 />
                 <Table.Column
-                    title="Event Date"
+                    title="Created Date"
                     dataIndex="doc_date"
-                    render={(_value, item: IEvent) => moment(item?.event_date).format("DD MMMM YYYY")}
+                    render={(_value, item: IDocument) => moment(item?.created_at).format("DD MMMM YYYY")}
                 />
                 <Table.Column
                     title="Status"
                     dataIndex="status"
-                    render={(_value, item: IEvent) => {
+                    render={(_value, item: IDocument) => {
                         if (item?.id_status === 1) {
-                            return <Tag color="green">{item?.event_status?.name}</Tag>
+                            return <Tag color="green">{item?.document_status?.status}</Tag>
                         } else {
-                            return <Tag color="red">{item?.event_status?.name}</Tag>
+                            return <Tag color="red">{item?.document_status?.status}</Tag>
                         }
                     }}
                 />
                 <Table.Column
                     title="Action"
                     dataIndex="Action"
-                    render={(_value, item: IEvent) => (
+                    render={(_value, item: IDocument) => (
                         <>
                             <Button
                                 type="link"
@@ -131,7 +131,7 @@ const EventTable = ({
                 />
             </Table>
 
-            <ModalEvent
+            <ModalDocument
                 session={session}
                 visible={modal}
                 setVisible={setModal}
@@ -146,4 +146,4 @@ export async function getServerSideProps(context: any) {
     return checkSessions;
 }
 
-export default EventTable;
+export default DocumentTable;

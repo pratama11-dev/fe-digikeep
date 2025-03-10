@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Select, Spin } from "antd";
 import { Sessions } from "types/Session";
 import useDebounce from "@utils/helpers/customHooks/useDebounce";
-import { IEvent } from "types/event/index";
-import { useEventQuery } from "@services/reactQuery/event";
+import { IEvent } from "types/document/index";
+import { useEventQuery } from "@services/reactQuery/document";
 
 export type SelectValueType = { label?: string; value?: string } | undefined;
 const SelectEvent = ({

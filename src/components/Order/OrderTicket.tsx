@@ -1,7 +1,7 @@
 import handleSessions from "@pages/api/GetSession";
 import { Button, Image, Table, TableProps, Tag } from "antd";
 import { Sessions } from "types/Session";
-import { IEvent } from "types/event/index";
+import { IEvent } from "types/document/index";
 import customFooterPagination from "@components/Partial/customFooterPagination";
 import getUserRole from "@utils/helpers/getUserRoles";
 import { useQueryClient } from "@tanstack/react-query";

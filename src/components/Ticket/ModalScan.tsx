@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { showError, showSuccess } from "@utils/helpers/AntdHelper";
 import { DatePicker, Form, Input, Modal, Segmented, Spin, Switch } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IEvent } from "types/event/index";
+import { IEvent } from "types/document/index";
 import { Sessions } from "types/Session";
 import dayjs from "dayjs";
 import QRCodeScanner from "@components/Scanner/QrScanner";

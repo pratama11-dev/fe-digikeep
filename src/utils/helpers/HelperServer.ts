@@ -146,7 +146,7 @@ export async function getSessionFromHeader(req: NextApiRequest | any) {
     }
 
     if (token !== "") {
-      if (token?.length > 7 ?? false) {
+      if (token?.length > 7 || false) {
         let bearer = token;
         if (getTokenFromHeader) {
           bearer = token.substring(7);
