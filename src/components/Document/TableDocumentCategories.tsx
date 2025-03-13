@@ -1,7 +1,7 @@
 import handleSessions from "@pages/api/GetSession";
 import { Button, Popconfirm, Switch, Table, TableProps, Tag } from "antd";
 import { Sessions } from "types/Session";
-import { IDocument } from "types/document/index";
+import { IDocumentCategory } from "types/document/index";
 import customFooterPagination from "@components/Partial/customFooterPagination";
 import moment from "moment";
 import getUserRole from "@utils/helpers/getUserRoles";
@@ -14,13 +14,13 @@ import { useQueryClient } from "@tanstack/react-query";
 
 interface ITableDocument {
     session: Sessions | undefined;
-    data?: IDocument[];
+    data?: IDocumentCategory[];
     pagination: { current?: number | undefined; pageSize?: number | undefined; total?: number | undefined };
     loading?: boolean;
-    onChange?: TableProps<IDocument>["onChange"];
+    onChange?: TableProps<IDocumentCategory>["onChange"];
 }
 
-const DocumentTable = ({
+const CategoriesDocumentTable = ({
     session,
     data,
     pagination,
@@ -32,7 +32,7 @@ const DocumentTable = ({
     const uq = useQueryClient();
 
     const [modal, setModal] = useState(false)
-    const [selectedData, setSelectedData] = useState<IDocument>()
+    const [selectedData, setSelectedData] = useState<IDocumentCategory>()
 
     const onDelete = async (id: number) => {
         const data = await FetcherPost({
@@ -80,74 +80,21 @@ const DocumentTable = ({
                     }}
                 />
                 <Table.Column
-                    title="Title"
+                    title="Catories"
                     dataIndex="name"
-                    render={(_value, item: IDocument) => item?.title ?? "-"}
+                    render={(_value, item: IDocumentCategory) => item?.category ?? "-"}
                 />
-                <Table.Column
-                    title="Nomer Pengajuan"
-                    dataIndex="nomer_pengajuan"
-                    render={(_value, item: IDocument) => item?.nomer_pengajuan ?? "-"}
-                />
-                <Table.Column
-                    title="Category"
-                    dataIndex="category"
-                    render={(_value, item: IDocument) => item?.document_category?.category ?? "-"}
-                />
-                <Table.Column
-                    title="Business Partner"
-                    dataIndex="bp"
-                    render={(_value, item: IDocument) => item?.business_partner?.name ?? "-"}
-                />
-                <Table.Column
-                    title="BS Code"
-                    dataIndex="bs_code"
-                    render={(_value, item: IDocument) => item?.bs_code ?? "-"}
-                />
-                <Table.Column
-                    title="B/L Code"
-                    dataIndex="bll_code"
-                    render={(_value, item: IDocument) => item?.bl_code ?? "-"}
-                />
+                
                 <Table.Column
                     title="Created Date"
                     dataIndex="doc_date"
-                    render={(_value, item: IDocument) => moment(item?.created_at).format("DD MMMM YYYY")}
+                    render={(_value, item: IDocumentCategory) => moment(item?.created_at).format("DD MMMM YYYY")}
                 />
-                <Table.Column
-                    title="Updated At"
-                    dataIndex="updated_at"
-                    render={(_value, item: IDocument) => moment(item?.updated_at).format("DD MMMM YYYY")}
-                />
-                <Table.Column
-                    title="Status"
-                    dataIndex="id_status"
-                    filters={[
-                        {
-                            text: "Outstanding",
-                            value: 1,
-                        },
-                        {
-                            text: "Accepted",
-                            value: 2,
-                        },
-                        {
-                            text: "Decline",
-                            value: 3,
-                        },
-                    ]}
-                    render={(_value, item: IDocument) => {
-                        if (item?.id_status === 1) {
-                            return <Tag color="green">{item?.document_status?.status}</Tag>
-                        } else {
-                            return <Tag color="red">{item?.document_status?.status}</Tag>
-                        }
-                    }}
-                />
+
                 <Table.Column
                     title="Action"
                     dataIndex="Action"
-                    render={(_value, item: IDocument) => (
+                    render={(_value, item: IDocumentCategory) => (
                         <>
                             <Button
                                 type="link"
@@ -174,15 +121,8 @@ const DocumentTable = ({
                     )}
                 />
             </Table>
-
-            <ModalDocument
-                session={session}
-                visible={modal}
-                setVisible={setModal}
-                data={selectedData}
-            />
         </>
     )
 }
 
-export default DocumentTable;
+export default CategoriesDocumentTable;
