@@ -8,7 +8,7 @@ import { IDocument, IDocumentCategory } from "types/document/index";
 import { CloseOutlined } from "@ant-design/icons";
 import SelectBusPartner from "@components/Select/SelectBusPartner";
 import { IBusinessPartnerRawQ } from "types/business-partner/index";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaSave } from "react-icons/fa";
 import SelectCategoryDoc from "@components/Select/SelectCategoryDoc";
 
 const FormEdit = ({
@@ -74,6 +74,7 @@ const FormEdit = ({
             })
 
             setCardCode(data?.business_partner)
+            setCategory(data?.document_category)
         }
     }, [data, visible])
 
@@ -171,7 +172,7 @@ const FormEdit = ({
                         Close
                     </Button>
                     <Button
-                        icon={<FaPlus />}
+                        icon={<FaSave />}
                         type="primary"
                         loading={isLoading ?? loading}
                         onClick={() => {

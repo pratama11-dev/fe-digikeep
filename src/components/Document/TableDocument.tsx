@@ -11,6 +11,8 @@ import { useState } from "react";
 import useFetcher from "@api/customHooks/useFetcher";
 import { showSuccess } from "@utils/helpers/AntdHelper";
 import { useQueryClient } from "@tanstack/react-query";
+import ModalSign from "./ModalSign";
+import { FaSign, FaSignature } from "react-icons/fa";
 
 interface ITableDocument {
     session: Sessions | undefined;
@@ -32,6 +34,7 @@ const DocumentTable = ({
     const uq = useQueryClient();
 
     const [modal, setModal] = useState(false)
+    const [modalSign, setModalSign] = useState(false)
     const [selectedData, setSelectedData] = useState<IDocument>()
 
     const onDelete = async (id: number) => {
@@ -157,6 +160,14 @@ const DocumentTable = ({
                                     setModal(true)
                                 }}
                             />
+                            <Button
+                                type="link"
+                                icon={<FaSignature />}
+                                onClick={() => {
+                                    setSelectedData(item)
+                                    setModalSign(true)
+                                }}
+                            />
                             <Popconfirm
                                 title="Delete?"
                                 description="Are you sure to delete this data?"
@@ -174,6 +185,13 @@ const DocumentTable = ({
                     )}
                 />
             </Table>
+
+            <ModalSign 
+                session={session}
+                visible={modalSign}
+                setVisible={setModalSign}
+                id_doc={selectedData?.id}
+            />
 
             <ModalDocument
                 session={session}

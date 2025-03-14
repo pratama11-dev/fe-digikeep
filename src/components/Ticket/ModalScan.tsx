@@ -2,12 +2,10 @@ import useAuth from "@api/customHooks/useAuth";
 import useFetcher from "@api/customHooks/useFetcher";
 import { handlingError } from "@pages/_app";
 import { useQueryClient } from "@tanstack/react-query";
-import { showError, showSuccess } from "@utils/helpers/AntdHelper";
-import { DatePicker, Form, Input, Modal, Segmented, Spin, Switch } from "antd";
+import { showSuccess } from "@utils/helpers/AntdHelper";
+import { Form, Input, Modal, Segmented, Spin } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { IEvent } from "types/document/index";
 import { Sessions } from "types/Session";
-import dayjs from "dayjs";
 import QRCodeScanner from "@components/Scanner/QrScanner";
 
 const ModalScan = ({
